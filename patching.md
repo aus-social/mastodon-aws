@@ -1,4 +1,4 @@
-! Server Patching Procedure (Outage window required)
+## Server Patching Procedure (Outage window required)
 
 >* Shut down server
 >* Take AMI Image of server
@@ -7,7 +7,7 @@
 >* Apply server patches
 >* Reboot if kernel patches
 
-! Mastodon Docker Live Upgrade Procedure (Limited outage window required)
+## Mastodon Docker Live Upgrade Procedure (Limited outage window required)
 
 * Read the upgrade details - the Docker specific details are generally documented by Gargron.
 
