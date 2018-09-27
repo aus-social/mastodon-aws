@@ -468,7 +468,7 @@ Resources:
                 apt-get --yes install python-certbot-nginx
                 echo "$?" >> /var/tmp/bootstrap.txt
 
-                echo "certbot certonly standalone" >> /var/tmp/bootstrap.txt
+                echo "Certbot certonly standalone - Request new TLS Cert" >> /var/tmp/bootstrap.txt
                 systemctl stop nginx.service
                 certbot certonly --standalone -d ${Domain} --agree-tos -m ${DomainEmail} --non-interactive
                 echo "$?" >> /var/tmp/bootstrap.txt
@@ -481,9 +481,14 @@ Resources:
               content: !Sub |
                 #!/bin/bash -ex
 
-                echo "TODO: setup crontabs for maintenance - as mastodon user" >> /var/tmp/bootstrap.txt
-                ## RAILS_ENV=production
-                ## @daily cd /home/mastodon/live && /home/mastodon/.rbenv/shims/bundle exec rake mastodon:media:remove_remote
+                echo "Certbot crontab - Renew TLS Certs" >> /bar/tmp/bootstrap.txt
+                cat >> /etc/cron.daily/letsencrypt-renew << EOF
+                #!/usr/bin/env bash
+                certbot renew
+                systemctl reload nginx
+                EOF
+                chmod +x /etc/cron.daily/letsencrypt-renew
+                systemctl restart cron
 
               mode: "000755"
               owner: "ubuntu"
