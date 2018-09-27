@@ -9,8 +9,7 @@
 
 ## Mastodon Docker Live Upgrade Procedure (Limited outage window required)
 
-* Read the upgrade details - the Docker specific details are generally documented by Gargron.
-
+>* Read the upgrade details - the Docker specific details are generally documented by Gargron.
 >* `git fetch`
 >* `git stash`
 >* `git checkout <version>`
