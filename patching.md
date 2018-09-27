@@ -1,11 +1,13 @@
 ## Server Patching Procedure (Outage window required)
 
->* Shut down server
+>* Inform Instance members of planned outage
+>* `shutdown now` (shut down server)
 >* Take AMI Image of server
 >* Take backup of DB (RDS Snapshot is online backup)
 >* Start up server again
 >* Apply server patches
 >* Reboot if kernel patches
+>* Docker should bring the containers back online automaticly.
 
 ## Mastodon Docker Live Upgrade Procedure (Limited outage window required)
 
