@@ -15,18 +15,18 @@ User-data/meta-data debug information is stored in /var/tmp/bootstrap.txt - `/va
 
 ## TODO
 * Setup scheduled tasks (documentation related to recommend tasks is slim)
-* Schedule Let's Encrypt cron
 * Automate creation of admin account (task is currently interactive only)
 * Build AWS Elasticsearch in the stack?
 * KMS for at-rest encryption
 * EIP for dedicated Public IP.
 
 ## Cost
-* EC2 Instance: $16.79 (t2.small)
-* S3 Bucket: $5-$100
-* ElasticCache:  $13.14 (cache.t2.micro)
-* RDS PostgreSQL: $13.14 (db.t2.micro)
-* Monthly cost estimated at: $50~ a month
+>* EC2 Instance: $16.79 (t2.small)
+>* S3 Bucket: $5-$100
+>* ElasticCache:  $13.14 (cache.t2.micro)
+>* RDS PostgreSQL: $13.14 (db.t2.micro)
+>
+>* Monthly cost estimated at: $50~ a month 
 
 * I'm running my https://aus.social instance on t2.small instances and we're almost at 100 active users.
 * While much more expensive than digital ocean but much more stable with lower techdebt due to the managed services (RDS/ElasticCache).
