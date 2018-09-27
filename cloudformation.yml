@@ -496,12 +496,13 @@ Resources:
                   ''      close;
                 }
 
+                proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=CACHE:10m inactive=7d max_size=1g;
+
                 server {
                   listen 80;
                   listen [::]:80;
                   server_name ${Domain};
                   root /home/mastodon/live/public;
-                  # Useful for Let's Encrypt
                   location /.well-known/acme-challenge/ { allow all; }
                   location / { return 301 https://$host$request_uri; }
                 }
@@ -521,7 +522,7 @@ Resources:
 
                   keepalive_timeout    70;
                   sendfile             on;
-                  client_max_body_size 8m;
+                  client_max_body_size 80m;
 
                   root /home/mastodon/live/public;
 
@@ -542,11 +543,13 @@ Resources:
 
                   location ~ ^/(emoji|packs|system/accounts/avatars|system/media_attachments/files) {
                     add_header Cache-Control "public, max-age=31536000, immutable";
+                    add_header Strict-Transport-Security "max-age=31536000";
                     try_files $uri @proxy;
                   }
-                  
+
                   location /sw.js {
                     add_header Cache-Control "public, max-age=0";
+                    add_header Strict-Transport-Security "max-age=31536000";
                     try_files $uri @proxy;
                   }
 
@@ -559,11 +562,17 @@ Resources:
                     proxy_pass_header Server;
 
                     proxy_pass http://127.0.0.1:3000;
-                    proxy_buffering off;
+                    proxy_buffering on;
                     proxy_redirect off;
                     proxy_http_version 1.1;
                     proxy_set_header Upgrade $http_upgrade;
                     proxy_set_header Connection $connection_upgrade;
+
+                    proxy_cache CACHE;
+                    proxy_cache_valid 200 7d;
+                    proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+                    add_header X-Cached $upstream_cache_status;
+                    add_header Strict-Transport-Security "max-age=31536000";
 
                     tcp_nodelay on;
                   }
